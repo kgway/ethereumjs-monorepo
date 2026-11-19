@@ -510,6 +510,12 @@ Fetch a live mainnet block via JSON-RPC and execute it with [`RPCStateManager`](
 npx tsx examples/runBlockWithRPC.ts <providerUrl> <blockNumber>
 ```
 
+Use an Ethereum mainnet endpoint (`eth_chainId` returns `0x1`). To replay block `N`, the example fetches the block with full transactions and reads account proofs, contract code, and storage from block `N - 1`.
+
+For example, before replaying block `24476000`, try `eth_getBlockByNumber` with `["0x1757960", true]` and `eth_getProof` with `["0x0000000000000000000000000000000000000000", [], "0x175795f"]`. A successful block response confirms that block data is available. If the proof request fails, check the provider's support for `eth_getProof` and its state retention for the parent block.
+
+You can use [Chain.Love](https://eth.chain.love/toolbox/apis) to find Ethereum RPC providers. Check the provider's documentation and run the probes against your chosen endpoint before starting the replay.
+
 Skips cleanly in CI when no RPC URL is provided.
 
 ### Offline mainnet block
